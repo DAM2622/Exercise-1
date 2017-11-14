@@ -1,0 +1,267 @@
+Exercise 1 
+
+Define the following key Object Orientated Programming (OOP) principles with examples:
+
+Encapsulation
+Inheritance 
+Polymorphism
+Abstraction 
+
+There are four major principles of Object Orientated Programming. These major principles are Encapsulation, Inheritance, Polymorphism and Abstraction. 
+
+Encapsulation 
+
+Essentially the principle of encapsulation is the method of hiding data implementation from outside the object’s definition by restricting access to accessors and mutators.(Anampiu ; raymondlewallen ) Therefore accessors and mutators need to be defined.
+
+An accessor is a method used to ask an object about itself. These tend to be in the structure of properties. These properties have a get method. The get method is an accessor method also known as an access modifier, there are four different types of accessor modifiers, these are:
+Public 
+Protected
+Private
+Package
+
+
+Public access modifiers are not restricted to properties and can be any public method about the object’s state that gives data about the object. All code can access the class, field, constructor or method, regardless of where the accessing code is located in a public access modifier.
+
+
+A private access modifiers can be used to ensure that the constructor cannot be called from anywhere outside the class. However  a private constructor can still be called upon by other constructors or static methods within the class. (Jenkov ) 
+
+Below is an example of how getters are used to hide the implementation of the objects with the seats values. The caller has the implementation of seats using the getter getSeats() in Example 1 and where it is set and what is setting the value. It will only return seats. 
+
+Mutators are public methods used to change the state of an object. Mutators also hide how the data gets adjusted after the mutator is implemented. Mutators use the set method that lets the caller modify the member data in private. In Example 1 the setter setSeats() is used for the seats field. It is public void because the setter doesn’t return anything back. It instead has a parameter to recieve the incoming value. The keyword this is used in front of seats to provide the value for the field seats from the parameter seats. The code on the left handside of Example 1 would provide a value of 150 as the parameter of seats has been set.(raymondlewallen ) 
+
+Example 1: (Wilson, Jim. 2015. “Java Fundamentals: The Java Language, (Representing Complex Types with Classes.” February 12. https://app.pluralsight.com/player?course=java-fundamentals-language&author=jim-wilson&name=java-fundamentals-language-m5&clip=11&mode=live.)
+
+Flight slcToNyc = new Flight();
+slcToNyc.setSeats(150);
+System.out.println(slcToNyc.getSests());
+
+public class Flight {
+  private int passengers;
+  private int seats; 
+  // other members elided for clarity
+  
+  public int getSeats() { 
+    return seats;
+  }
+  
+  public void setSeats(int seats) {
+    this.seats = seats;
+  }
+}
+
+
+
+Inheritance
+
+Inheritance is the principle that classes in Java can be compiled from other derived classes. From these classes fields and methods can be ‘inherited’. 
+The definition of inheritance is given as: “A class that is derived from another class is called a subclass. The class from which the subclass is derived is called a superclass or a base class.
+
+Excepting Object, which has no superclass, every class has one and only one direct superclass (single inheritance). In the absence of any other explicit superclass, every class is implicitly a subclass of Object.
+
+Classes can be derived from classes that are derived from classes that are derived from classes, and so on, and ultimately derived from the topmost class, Object. Such a class is said to be descended from all the classes in the inheritance chain stretching back to Object.”(Inheritance (The Java™ Tutorials > Le...) 
+
+Subclasses regardless of the package they are in inherit all of the public and protected members of its parent class.If the subclass is in the same package as its parent it will also inherit all the package private members of the package. Subclasses cannot inherit private members of its parent class but can however inherit any public or protected methods of accessing the private fields. 
+
+Example 2 (Inheritance (The Java™ Tutorials > Le...) :
+public class Bicycle {
+        
+    // the Bicycle class has three fields
+    public int cadence;
+    public int gear;
+    public int speed;
+        
+    // the Bicycle class has one constructor
+    public Bicycle(int startCadence, int startSpeed, int startGear) {
+        gear = startGear;
+        cadence = startCadence;
+        speed = startSpeed;
+    }
+        
+    // the Bicycle class has four methods
+    public void setCadence(int newValue) {
+        cadence = newValue;
+    }
+        
+    public void setGear(int newValue) {
+        gear = newValue;
+    }
+        
+    public void applyBrake(int decrement) {
+        speed -= decrement;
+    }
+        
+    public void speedUp(int increment) {
+        speed += increment;
+    }
+        
+}
+
+
+A class declaration for a MountainBike class that is a subclass of Bicycle might look like this:
+public class MountainBike extends Bicycle {
+        
+    // the MountainBike subclass adds one field
+    public int seatHeight;
+
+    // the MountainBike subclass has one constructor
+    public MountainBike(int startHeight,
+                        int startCadence,
+                        int startSpeed,
+                        int startGear) {
+        super(startCadence, startSpeed, startGear);
+        seatHeight = startHeight;
+    }   
+        
+    // the MountainBike subclass adds one method
+    public void setHeight(int newValue) {
+        seatHeight = newValue;
+    }   
+}
+Example 2 shows the implementation of a Bicycle class. MountainBike is a subclass of Bicycle and therefore will inherit all its methods and fields. Also added is the field seatHeight and the appropriate method to set it. Using the subclass provides an identical set of code, as was written in Bicycle except for the added constructor, this is a far more efficient way of coding especially if the methods in Bicycle were complex.
+
+
+Polymorphism
+
+Polymorphism is another key OOP principle. It is defined as “one name, many forms”. It implements the principle by having multiple methods all with the same name, but differ slightly when asked to function. Overriding is one method of Polymorphism also known as an instance method.. The principle can be used to override methods in the base class with the same signature (eg. name, number of parameters, type of parameters) and the return type of the instance method in the superclass overrides the superclass’ method.An overriding method can also return a subtype of the type returned by the overridden method. This subtype is called a covariant return type.(Overriding and Hiding Methods (The Ja...) 
+
+Example 3:
+
+Flight f1 = new Flight();
+System.out.println(f1.getSeats());
+
+Cargo Flight cf = new CargoFlight;
+System.out.println(cf.getSeats());
+
+Flight f2 = new CargoFlight();
+System.out.println(f2.getSeats());
+
+f2.add1Passenger();
+cf.add1Passenger();
+
+
+public class CargoFlight extends Flight { 
+  // other members elided for clarity 
+  
+  @Override 
+  int getSeats() {return 12; }
+}
+
+
+public class Flight {
+  // other memebers elided for clarity
+  int getSeats() {return 150;}
+  
+  public void add1Passenger() {
+    if(hasSeating())
+      passengers +=1;
+    else 
+      handleTooMany();
+  }
+  private boolean hasSeating() {
+    return passengers < getSeats();
+  }
+}
+
+
+Example 3 shows how the getSeats of CargoFlight can override the base class method of Flight to return the correct number of seats available on the flight, in this instance 12, not 150. The method of the base class is being overridden, assuring that the appropriate method of implementation gets called based on the type of object created in this instance of type CargoFlight, not the type of reference used.The @Override annotation is used to make sure that accidental mistakes in terms of not matching the signature correctly. This tells the compiler that it is the intention to override a method from the base class. The compiler then checks to see that the base class has a method with that signature. This method has no impact at run time and is only used at compile time. 
+
+The static method is another method of Polymorphism. It is defined as “The static method is used when a subclass defines a static method with the same signature as a static method in the superclass, then the method in the subclass hides the one in the superclass.
+The distinction between hiding a static method and overriding an instance method has important implications:
+The version of the overridden instance method that gets invoked is the one in the subclass.
+The version of the hidden static method that gets invoked depends on whether it is invoked from the superclass or the subclass.”(Overriding and Hiding Methods (The Ja...)
+
+Example 4 (Overriding and Hiding Methods (The Ja...):
+public class Animal {
+    public static void testClassMethod() {
+        System.out.println("The static method in Animal");
+    }
+    public void testInstanceMethod() {
+        System.out.println("The instance method in Animal");
+    }
+}
+
+
+The second class, a subclass of Animal, is called Cat:
+public class Cat extends Animal {
+    public static void testClassMethod() {
+        System.out.println("The static method in Cat");
+    }
+    public void testInstanceMethod() {
+        System.out.println("The instance method in Cat");
+    }
+
+    public static void main(String[] args) {
+        Cat myCat = new Cat();
+        Animal myAnimal = myCat;
+        Animal.testClassMethod();
+        myAnimal.testInstanceMethod();
+    }
+Example 4 shows that the Cat class overrides the Animal class and also hides the static method in Animal. The main method in this class produces an instance of Cat and conjures up testClassMethod() on the class and testInstanceMethod() on the instance.
+The program output is therefore:
+The static method in Animal
+The instance method in Cat
+
+
+The version of the overridden instance method that gets invoked is the one in the subclass, whilst the hidden static method that gets invoked is the one in the superclass. 
+
+
+Abstraction 
+
+Abstraction is the quality of dealing with ideas rather than events. In OOP, abstraction is a process of hiding the implementation details from the user, only the functionality will be provided to the user. In other words, the user will have the information on what the object does instead of how it does it. In Java, abstraction is achieved using Abstract classes and interfaces.(tutorialspoint.com )
+
+Abstract classes are classes that contain the keyword abstract in its declaration. Abstract classes may or maynot contain abstract methods (eg public void get()). These methods are methods that do not have a body. If a class does contain an abstract method however it must be declared as abstract and therefore cannot be instantiated. Abstract classes require inheritance from other classes to provide the path to use the abstract methods in the class. Implementations have to be provided for all abstract methods in an abstract class if it has been inherited.(tutorialspoint.com )
+Abstract classes should be used if code is required to be shared among multiple closely related classes. Also An abstract class may have static fields and static methods. You can use these static members with a class reference (for example, AbstractClass.staticMethod()) as you would with any other class.
+
+
+Example 5:
+
+abstract class GraphicObject {
+    int x, y;
+    ...
+    void moveTo(int newX, int newY) {
+        ...
+    }
+    abstract void draw();
+    abstract void resize();
+}
+
+Firstly the class is labelled as abstract in this case GraphicObject and the methods and variables shared by the subclasses are provided. The variables in this case are the current coordinates of the object and the moveTo method. The abstract class GraphicObject then declares its abstract methods of draw() and resize(), these will be used by the subclasses but implemented slightly differently in each subclass. Every non-abstract subclass of GraphicObject must provide implements for the methods of draw and resize. These are shown below:
+
+
+class Circle extends GraphicObject {
+    void draw() {
+        ...
+    }
+    void resize() {
+        ...
+    }
+}
+class Rectangle extends GraphicObject {
+    void draw() {
+        ...
+    }
+    void resize() {
+        ...
+    }
+}
+
+
+
+
+
+Citations 
+“Abstract Methods and Classes (The JavaTM Tutorials > Learning the Java Language > Interfaces and Inheritance).” 2017. Accessed November 13. https://docs.oracle.com/javase/tutorial/java/IandI/abstract.html.
+
+Anampiu, Andrew. 2017. “The Four Principles of OOP.” Accessed November 13. https://anampiu.github.io/blog/OOP-principles/. 
+
+“Inheritance (The JavaTM Tutorials > Learning the Java Language > Interfaces and Inheritance).” 2017. Accessed November 13. https://docs.oracle.com/javase/tutorial/java/IandI/subclasses.html. 
+
+Jenkov, Jakob. 2017. “Java Access Modifiers.” Accessed November 13. http://tutorials.jenkov.com/java/access-modifiers.html 
+
+Lewallen, Raymond. 2017. “4 Major Principles of Object-Oriented Programming | Raymond Lewallen.” Accessed November 13. http://codebetter.com/raymondlewallen/2005/07/19/4-major-principles-of-object-oriented-programming/. 
+
+“Overriding and Hiding Methods (The JavaTM Tutorials > Learning the Java Language > Interfaces and Inheritance).” 2017. Accessed November 13. https://docs.oracle.com/javase/tutorial/java/IandI/override.html. 
+
+tutorialspoint.com. 2017a. “Java Abstraction.” Www.tutorialspoint.com. Accessed November 13. https://www.tutorialspoint.com/java/java_abstraction.htm. 
+
+Wilson, Jim. 2015. Java Fundamentals: The Java Language. PluralSight. https://app.pluralsight.com/player?course=java-fundamentals-language&author=jim-wilson&name=java-fundamentals-language-m2&clip=0&mode=live. 
